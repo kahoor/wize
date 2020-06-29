@@ -1,17 +1,7 @@
-# from django.contrib import admin
-# from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib import admin
+from .models import Info
 
-# from .models import User
-# # Register your models here.
-
-
-# class UserAdmin(BaseUserAdmin):
+@admin.register(Info)
+class InfoAdmin(admin.ModelAdmin):
+    list_display = ('user', 'role',)
     
-#     add_fieldsets = (
-#         (None, {
-#             'classes': ('wide',),
-#             'fields': ('email', 'username','first_name', 'last_name', 'role', 'password')}
-#         ),
-#     )
-
-# admin.site.register(User, UserAdmin)
