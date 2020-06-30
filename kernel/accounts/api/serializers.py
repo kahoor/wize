@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
+from ..models import Info
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -24,5 +25,8 @@ class RegistrationSerializer(serializers.ModelSerializer):
                     password=password
         )
         user.save()
-        
+        info = Info()
+        info.user = user
+        info.save()
+
         return user
