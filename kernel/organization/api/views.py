@@ -17,5 +17,10 @@ class UpgradeRequestView(mixins.CreateModelMixin, generics.GenericAPIView):
     serializer_class = UpgradeRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_serializer_context(self):
+        context = super(UpgradeRequestView, self).get_serializer_context()
+        context.update({"request":self.request})
+        return context
+
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)

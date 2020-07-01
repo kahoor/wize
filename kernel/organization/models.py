@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from accounts.models import Info
 
 # Create your models here.
 class Organization(models.Model):
@@ -18,6 +19,6 @@ class UpgradeRequest(models.Model):
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     current_role = models.CharField(max_length=2)
-    dream_role = models.CharField(max_length=2)
+    dream_role = models.CharField(max_length=2, choices=Info.ROLES_CHOICES[2:])
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='WL')
