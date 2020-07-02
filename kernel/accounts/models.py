@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Info(models.Model):
     ROLES_CHOICES = (
-        ('SA', 'Site Admin'),
         ('EE', 'Employee'),
         ('EO', 'Employee of an organization'),
         ('DO', 'Director of an organization'),

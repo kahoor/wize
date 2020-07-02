@@ -12,7 +12,7 @@ class OrganizationView(mixins.CreateModelMixin, generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-class UpgradeRequestView(mixins.CreateModelMixin, generics.GenericAPIView):
+class UpgradeRequestView(mixins.CreateModelMixin, mixins.RetrieveModelMixin, generics.GenericAPIView):
        
     serializer_class = UpgradeRequestSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -21,6 +21,11 @@ class UpgradeRequestView(mixins.CreateModelMixin, generics.GenericAPIView):
         context = super(UpgradeRequestView, self).get_serializer_context()
         context.update({"request":self.request})
         return context
+
+    # def get_queryset(self):
+    #     user = self.request.user
+        
+        
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
