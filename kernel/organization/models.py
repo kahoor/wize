@@ -22,3 +22,7 @@ class UpgradeRequest(models.Model):
     dream_role = models.CharField(max_length=2, choices=Info.ROLES_CHOICES[2:])
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     status = models.CharField(max_length=3, choices=STATUS_CHOICES, default='WL')
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
