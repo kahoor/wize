@@ -10,13 +10,17 @@ class OrganizationSerializer(serializers.ModelSerializer):
 class UpgradeRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = UpgradeRequest
-        fields = ['dream_role', 'organization']
+        fields = ['user', 'current_role', 'dream_role', 'organization', 'status', 'created']
+        extra_kwargs = {
+                'user': {'read_only': True},
+                'current_role': {'read_only': True},
+                'status': {'read_only': True},
+                'created': {'read_only': True},
+        }
 
+    
     def save(self):
-        # dream_role = self.validated_data.pop('dream_role')
-        # if not str(dream_role) in ['CO', 'EO']:
-        #     raise serializers.ValidationError({'Dream role': 'Dream role can be CO or EO.'})
-        
+
         upgraderequest = UpgradeRequest(
 					user=self.context['request'].user,
                     current_role=self.context['request'].user.info.role,
