@@ -8,15 +8,11 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
 
 class UpgradeRequestSerializer(serializers.ModelSerializer):
+    my_absolute_url = serializers.URLField(source='get_absolute_url', read_only=True) 
     class Meta:
         model = UpgradeRequest
-        fields = ['user', 'current_role', 'dream_role', 'organization', 'status', 'created']
-        extra_kwargs = {
-                'user': {'read_only': True},
-                'current_role': {'read_only': True},
-                'status': {'read_only': True},
-                'created': {'read_only': True},
-        }
+        fields = ['id', 'user', 'current_role', 'dream_role', 'organization', 'status', 'created', 'my_absolute_url']
+        read_only_fields = ['user', 'current_role', 'status', 'created']
 
     
     def save(self):
@@ -30,3 +26,21 @@ class UpgradeRequestSerializer(serializers.ModelSerializer):
 
         upgraderequest.save()
         return upgraderequest
+
+class ChekUpgradeRequestSerializer(serializers.ModelSerializer):
+    my_absolute_url = serializers.URLField(source='get_absolute_url', read_only=True) 
+    class Meta:
+        model = UpgradeRequest
+        fields = ['id', 'user', 'current_role', 'dream_role', 'organization', 'status', 'created', 'my_absolute_url']
+        read_only_fields = ['user', 'current_role', 'dream_role', 'organization', 'created']
+
+    def save(self):
+        self.instance.status = self.validated_data['status']
+        if self.validated_data['status']=='ACC':
+            if self.instance.dream_role=='DO':
+                self.instance.user.info.make_DO(self.instance.organization)
+            elif self.instance.dream_role=='EO':
+                self.instance.user.info.make_EO(self.instance.organization)
+        self.instance.user.info.save()
+        self.instance.save()
+        return self.instance

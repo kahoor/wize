@@ -18,6 +18,7 @@ class Info(models.Model):
         return self.user.username
 
     def make_DO(self, org):
+        print('yes')
         self.role = 'DO'
         self.organization = org
 
