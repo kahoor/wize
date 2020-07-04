@@ -3,5 +3,5 @@ from .models import Info
 
 @admin.register(Info)
 class InfoAdmin(admin.ModelAdmin):
-    list_display = ('user', 'role',)
+    list_display = ('id', 'user', 'role',)
     
