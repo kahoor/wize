@@ -42,6 +42,8 @@ INSTALLED_APPS = [
 # local apps installing
 INSTALLED_APPS.append('accounts')
 INSTALLED_APPS.append('organization')
+INSTALLED_APPS.append('duties')
+
 
 # third party apps installing
 INSTALLED_APPS.append('rest_framework')
