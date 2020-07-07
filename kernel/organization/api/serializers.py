@@ -1,5 +1,7 @@
 from rest_framework import serializers
+
 from ..models import Organization, UpgradeRequest
+
 
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:

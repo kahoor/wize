@@ -1,11 +1,9 @@
 
-from rest_framework import status
-from rest_framework import mixins
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import generics, mixins, permissions, status
 
-from .serializers import RegistrationSerializer, UserInfoSerializer
 from ..models import Info
+from .serializers import RegistrationSerializer, UserInfoSerializer
+
 
 class Registeration(mixins.CreateModelMixin, generics.GenericAPIView):
        
@@ -42,3 +40,5 @@ class UserInfoDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, gen
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
+
+    

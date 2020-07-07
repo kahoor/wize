@@ -1,14 +1,13 @@
-from rest_framework import mixins
-from rest_framework import generics
-from rest_framework import permissions
-
-from .serializers import EODutySerializer, DODutyCreationSerializer, DutyUpdateSerializer
-from ..models import Duty
-from .permissions import NotSiteAdmin, NotEE
 from accounts.models import Info
+from rest_framework import generics, mixins, permissions
+
+from ..models import Duty
+from .permissions import NotEE, NotSiteAdmin
+from .serializers import (DODutyCreationSerializer, DutyUpdateSerializer,
+                          EODutySerializer)
 
 
-class DutyView(mixins.CreateModelMixin, mixins.ListModelMixin, generics.GenericAPIView):
+class DutyView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
 
     permission_classes = [permissions.IsAuthenticated, NotSiteAdmin, NotEE]
     queryset = Duty.objects.all()
@@ -76,6 +75,6 @@ class DutyDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generic
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-    
-        
 
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)

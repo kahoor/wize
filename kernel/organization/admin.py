@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from .models import Organization, UpgradeRequest
+
 # Register your models here.
 
 @admin.register(Organization)

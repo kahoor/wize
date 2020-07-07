@@ -1,4 +1,5 @@
 from django.urls import path
+
 from accounts.api.views import Registeration, UserInfoDetailView
 
 app_name = 'account'

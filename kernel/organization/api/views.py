@@ -1,9 +1,9 @@
-from rest_framework import mixins
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import generics, mixins, permissions
 
-from .serializers import OrganizationSerializer, UpgradeRequestSerializer, ChekUpgradeRequestSerializer
 from ..models import UpgradeRequest
+from .serializers import (ChekUpgradeRequestSerializer, OrganizationSerializer,
+                          UpgradeRequestSerializer)
+
 
 class OrganizationView(mixins.CreateModelMixin, generics.GenericAPIView):
        
@@ -39,7 +39,7 @@ class UpgradeRequestView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
 
-class UpgradeRequestDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
+class UpgradeRequestDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
     
     permission_classes = [permissions.IsAuthenticated]
     lookup_field = 'pk'
@@ -70,5 +70,6 @@ class UpgradeRequestDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixi
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-    
-        
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)

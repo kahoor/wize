@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
+
 from rest_framework import serializers
+
 from ..models import Info
 
 
@@ -66,4 +68,3 @@ class UserInfoSerializer(serializers.ModelSerializer):
         self.instance.user.info.save()
         self.instance.save()
         return self.instance
-        

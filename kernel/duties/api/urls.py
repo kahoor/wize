@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import DutyView, DutyDetailView
+
+from .views import DutyDetailView, DutyView
 
 app_name = 'duties'
 

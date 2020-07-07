@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import OrganizationView, UpgradeRequestView, UpgradeRequestDetailView
+
+from .views import (OrganizationView, UpgradeRequestDetailView,
+                    UpgradeRequestView)
 
 app_name = 'organization'
 
