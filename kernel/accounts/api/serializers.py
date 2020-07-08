@@ -68,3 +68,10 @@ class UserInfoSerializer(serializers.ModelSerializer):
         self.instance.user.info.save()
         self.instance.save()
         return self.instance
+
+class UserInfoGetSerializer(serializers.ModelSerializer):
+    my_absolute_url = serializers.URLField(source='get_absolute_url', read_only=True)
+    class Meta:
+        model = Info
+        fields = ['id', 'user', 'role', 'organization', 'my_absolute_url']
+        

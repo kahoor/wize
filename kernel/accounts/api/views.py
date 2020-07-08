@@ -2,7 +2,9 @@
 from rest_framework import generics, mixins, permissions, status
 
 from ..models import Info
-from .serializers import RegistrationSerializer, UserInfoSerializer
+from .permissions import DOorSA
+from .serializers import (RegistrationSerializer, UserInfoGetSerializer,
+                          UserInfoSerializer)
 
 
 class Registeration(mixins.CreateModelMixin, generics.GenericAPIView):
@@ -13,10 +15,21 @@ class Registeration(mixins.CreateModelMixin, generics.GenericAPIView):
         return self.create(request, *args, **kwargs)
 
 
+class UserInfoListView(generics.ListAPIView):
+    serializer_class = UserInfoGetSerializer
+    
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Info.objects.all()
+        elif user.info.role=='DO':
+            return Info.objects.filter(organization=user.info.organization, role='EO')
+    
+
 class UserInfoDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
     
     # TODO: costom permission
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, DOorSA]
     lookup_field = 'pk'
     serializer_class = UserInfoSerializer
     # queryset = Info.objects.all()
@@ -40,5 +53,3 @@ class UserInfoDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, gen
 
     def put(self, request, *args, **kwargs):
         return self.update(request, *args, **kwargs)
-
-    
