@@ -29,11 +29,11 @@ class DutyView(mixins.CreateModelMixin, mixins.ListModelMixin, mixins.DestroyMod
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
-            return Duty.objects.all()
+            return Duty.objects.all().order_by('-deadline')
         elif user.info.role=='DO':
-            return Duty.objects.filter(usersinfo__in=list(Info.objects.filter(organization=user.info.organization))).distinct()
+            return Duty.objects.filter(usersinfo__in=list(Info.objects.filter(organization=user.info.organization))).distinct().order_by('-deadline')
         elif user.info.role=='EO':
-            return Duty.objects.filter(usersinfo__in=[user.info])
+            return Duty.objects.filter(usersinfo__in=[user.info]).order_by('-deadline')
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
