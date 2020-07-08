@@ -74,3 +74,14 @@ python manage.py migrate
                     Director : all Duties for his/her Employee(same organization).
                     Employee : only his/her Duties.
 * Delete A Duty : `DELETE /api/duties/:pk/` 
+
+
+## Database
+
+I used Postgresql because I had some experienced with that.
+And it's easy to use.
+
+
+
+
+
